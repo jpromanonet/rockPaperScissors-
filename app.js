@@ -23,7 +23,9 @@ const game = () => {
 
     // Shaking hand function
     hands.forEach(hand => {
-      hand.addEventListener("animationend");
+      hand.addEventListener("animationend", function() {
+        this.style.animation = "";
+      });
     });
 
     // Computer options
@@ -34,12 +36,16 @@ const game = () => {
         // The computer choice
         const computerNumber = Math.floor(Math.random() * 3);
         const computerChoice = computerOptions[computerNumber];
-        // Here is where we call compare hands
-        compareHands(this.textContent, computerChoice);
-        // Update images
-        playerHand.src = `./assets/${this.textContent}.png`;
-        computerHand.src = `./assets/${computerChoice}.png`;
 
+        // Here is where we call compare hands
+        setTimeout(() => {
+          compareHands(this.textContent, computerChoice);
+          // Update images
+          playerHand.src = `./assets/${this.textContent}.png`;
+          computerHand.src = `./assets/${computerChoice}.png`;
+        }, 2000);
+
+        // Animation
         playerHand.style.animation = "shakePlayer 2s ease";
         computerHand.style.animation = "shakeComputer 2s ease";
       });
